@@ -21,7 +21,6 @@ class MakeTraitCommand extends CommandGenerator
       {name : The name of the trait class}
       {--force : Create the class even if the model already exists}';
 
-
     /**
      * The console command description.
      *
@@ -119,7 +118,6 @@ class MakeTraitCommand extends CommandGenerator
         }
 
         return $this::SUCCESS;
-
     }
 
 }
