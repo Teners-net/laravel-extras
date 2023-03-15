@@ -1,0 +1,28 @@
+{
+    "name": "platinum/laravel-extras",
+    "description": "Extend Laravel Commads and add more artisan commands and useful traits",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/ThePlatinum/laravel-extras#readme",
+    "autoload": {
+        "psr-4": {
+            "Platinum\\LaravelExtras\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Platinum",
+            "email": "platinumemirate@gmail.com",
+            "homepage": "https://emmannueldesina.vercel.app/",
+            "role": "Developer"
+        }
+    ],
+    "require": {},
+    "extra": {
+      "laravel": {
+          "providers": [
+              "Platinum\\LaravelExtras\\LaravelExtrasServiceProvider"
+          ]
+      }
+    }
+}
