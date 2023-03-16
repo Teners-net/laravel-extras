@@ -7,7 +7,13 @@ use Illuminate\Support\Str;
 trait Sluggable
 {
 
-  protected string $sourceColumn = 'title';
+  /**
+   * Get default source column
+   */
+  protected function defaultSourceColumn(): string 
+  {
+    return config('laravel-extras.source-column', '');
+  }
 
   /**
    * Boot the sluggable trait for the model.
@@ -30,7 +36,7 @@ trait Sluggable
    */
   protected function getSourceColumn(): string
   {
-    return $this->slugSourceColumn ?? $this->sourceColumn;
+    return $this->slugSourceColumn ?? $this->defaultSourceColumn();
   }
 
   /**

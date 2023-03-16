@@ -37,7 +37,7 @@ class FileGenerator
      * @param bool $overwrite
      * @throws \Exception
      */
-    public function generateFile(bool $overwrite = null)
+    public function generateFile(bool $overwrite = false): mixed
     {
         $path = $this->path;
 

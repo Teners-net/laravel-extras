@@ -10,7 +10,7 @@ use Platinum\LaravelExtras\Helpers\GenerateFileContent;
 class MakeTraitCommand extends CommandGenerator
 {
     public $argumentName = 'name';
-    protected $stubPath = __DIR__.'/../stubs/traits.stub';
+    protected $stubPath = __DIR__.'/../stubs/trait.stub';
 
     /**
      * The name and signature of the console command.
@@ -26,7 +26,7 @@ class MakeTraitCommand extends CommandGenerator
      *
      * @var string
      */
-    protected $description = 'Create a new trait';
+    protected $description = 'Create a new trait class';
 
     /**
      * Get the Trait name in studly format
@@ -67,14 +67,6 @@ class MakeTraitCommand extends CommandGenerator
     }
 
     /**
-     * Check for overide --force option
-     */
-    public function useOveride(): bool
-    {
-      return $this->option('force');
-    }
-
-    /**
      * Get Template Content
      */
     protected function getTemplateContent(): string
@@ -94,7 +86,7 @@ class MakeTraitCommand extends CommandGenerator
     /**
      * Execute the console command
      */
-    public function handle()
+    public function handle(): int
     {
         $path = str_replace('\\', '/', $this->getDestinationFilePath());
 

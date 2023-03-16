@@ -44,4 +44,12 @@ abstract class CommandGenerator extends Command
         return trim($namespace, '\\');
     }
 
+    /**
+     * Check for overide --force option
+     */
+    public function useOveride(): bool
+    {
+      return $this->option('force');
+    }
+
 }

@@ -1,6 +1,6 @@
 {
     "name": "platinum/laravel-extras",
-    "description": "Extend Laravel Commads and add more artisan commands and useful traits",
+    "description": "Extend laravel applications with more artisan commands, traits and useful helper classes",
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/ThePlatinum/laravel-extras#readme",
