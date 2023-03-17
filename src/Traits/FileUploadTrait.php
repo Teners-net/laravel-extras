@@ -103,11 +103,11 @@ trait FileUploadTrait
    * @param string $disk
    */
   public function uploadFile(
-    UploadedFile $file, 
-    array $rules = [], 
+    UploadedFile $file,
+    bool $storeInDb = false,
+    array $rules = [],
     string $path = 'uploads',
     string $disk = 'public',
-    bool $storeInDb = false,
     Model $model_instance = new File
     ): array
   {

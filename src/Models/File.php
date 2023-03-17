@@ -2,15 +2,20 @@
 
 namespace Platinum\LaravelExtras\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Platinum\LaravelExtras\Helpers\ReadableValue;
 
 class File extends Model
 {
-  use HasFactory ;
 
+  /**
+   * The attributes that are not mass assignable.
+   *
+   * @var array<int, string>
+   */
+  protected $guarded = ['id'];
+  
   /**
    * Get the file size in human readable
    */

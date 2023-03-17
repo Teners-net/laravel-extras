@@ -37,6 +37,9 @@ Extra Helpers:
 - [FileGenerator](docs/helpers/file-generator.md)
 - [ReadableValue](docs/helpers/readable-value.md)
 
+Extra Models:
+- [File](docs/models/file.md)
+
 
 <br>
 

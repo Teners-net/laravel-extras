@@ -2,6 +2,22 @@
 
 This trait provides a set of methods that can be used to handle file uploading, validation, and storage. It can be added to any Laravel model that needs to handle file uploads.
 
+## Methods
+
+**uploadFile()**
+```php
+uploadFile(
+  UploadedFile $file,
+  bool $storeInDb = false, 
+  array $rules = [],
+  string $path = 'uploads',
+  string $disk = 'public',
+  Model $model_instance = new File
+): array
+```
+
+Uploads, validates and stores a file. Returns an array with a success key that indicates if the upload succeeded or failed, and a file key with the File model instance if the file was stored in the database. If storeInDb is set to false, the file key will be null.
+
 ## Usage
 Add the FileUploadTrait and call the uploadFile() method from your controller to handle the file upload:
 ```php
@@ -20,8 +36,8 @@ class PostController extends Controller
 
         $upload_result = $this->uploadFile(
             $request->file('file'),
-            $validation_rules,
-            'my_upload_path', // uses 'uploads' by defualt
+            false,
+            $validation_rules,  // validation 'required|file' will also be applied
         );
 
         if ($upload_result['success']) {
@@ -37,20 +53,22 @@ class PostController extends Controller
 
 If you would like to store the details of the file uploaded the `Platinum\LaravelExtras\Models\File` model is used by default, but you can specify your own model.
 
+
+Publish the migration
+```bash
+php artisan vendor:publish --provider="Platinum\LaravelExtras\LaravelExtrasServiceProvider" --tag="migrations"
+```
+and run `php artisan migrate`.
+
+> Check here for more on the the [File](../models/file.md) model
+
 ```php
   ...
   $upload_result = $this->uploadFile(
       $request->file('file'),
-      $validation_rules,
-      'my_upload_path', // uses 'uploads' by defualt
-      'public', // default value
       true, // saves to database
+      [], // validation 'required|file' will still apply
       $custum_model_instance // Your custom File model instance
   );
   ...
-```
-
-Publish the File model migration
-```bash
-php artisan vendor:publish --provider="Platinum\LaravelExtras\LaravelExtrasServiceProvider" --tag="migrations"
 ```
