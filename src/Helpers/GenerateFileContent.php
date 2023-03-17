@@ -31,7 +31,7 @@ class GenerateFileContent
         $contents = file_get_contents($this->path);
 
         foreach ($this->replaces as $search => $replace) {
-            $contents = str_replace('$' . strtoupper($search) . '$', $replace, $contents);
+            $contents = str_replace($search, $replace, $contents);
         }
 
         return $contents;
