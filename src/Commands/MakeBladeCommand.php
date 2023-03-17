@@ -79,7 +79,7 @@ class MakeBladeCommand extends CommandGenerator
         $contents = $this->getTemplateContent();
 
         try {
-            (new FileGenerator($path, $contents, $this->useOveride()))->generateFile();
+            (new FileGenerator($path, $contents))->generateFile($this->useOveride());
             
             $this->info("Created blade: {$path}");
         } catch (\Exception $e) {

@@ -8,7 +8,6 @@ class FileGenerator
 {
     protected string $path;
     protected string $content;
-    protected bool $overwrite;
     protected Filesystem $filesystem;
 
     /**
@@ -16,18 +15,15 @@ class FileGenerator
      *
      * @param string $path
      * @param mixed $content
-     * @param bool $overwrite
      * @param Filesystem $filesystem
      */
     public function __construct(
         string $path,
         mixed $content,
-        bool $overwrite = false,
         Filesystem $filesystem = null
     ) {
         $this->path = $path;
         $this->content = $content;
-        $this->overwrite = $overwrite;
         $this->filesystem = $filesystem ?: new Filesystem();
     }
 
@@ -42,13 +38,15 @@ class FileGenerator
         $path = $this->path;
 
         if (!$this->filesystem->exists($path)) {
-            return $this->filesystem->put($path, $this->content);
+            $this->filesystem->put($path, $this->content);
+            return true;
         }
 
         $shouldOverwrite = $overwrite ?? $this->overwrite;
 
         if ($shouldOverwrite) {
-            return $this->filesystem->put($path, $this->content);
+            $this->filesystem->put($path, $this->content);
+            return true;
         }
 
         throw new \Exception('File already exists!');

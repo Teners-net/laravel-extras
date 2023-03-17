@@ -10,12 +10,13 @@ use Platinum\LaravelExtras\Helpers\FileGenerator;
 // Instantiate the class
 $fileGenerator = new FileGenerator(
     'path/to/file.txt', // path of the file to be created
-    'file contents', // contents of the file to be created
-    true // optional: set to `true` if you want to overwrite existing files
+    'file contents', // contents of the file to be createdexisting files
 );
 
 // Generate the file
-$fileGenerator->generateFile();
+$fileGenerator->generateFile(
+  true // optional: set to `true` if you want to overwrite 
+);
 ```
 
 You can also use your own instance of Illuminate\Filesystem\Filesystem to generate the file:
@@ -29,11 +30,10 @@ $filesystem = new Filesystem();
 $fileGenerator = new FileGenerator(
     'path/to/file.txt',
     'file contents',
-    true,
     $filesystem
 );
 
-$fileGenerator->generateFile();
+$fileGenerator->generateFile(true);
 ```
 
 ### Overwriting Existing Files
