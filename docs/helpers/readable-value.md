@@ -4,7 +4,6 @@ This class provides some helper methods to format values in a human-readable way
 
 ```php
 use Platinum\LaravelExtras\Helpers\ReadableValue;
-$rv = new ReadableValue();
 ```
 
 ## Methods
@@ -17,10 +16,10 @@ This method takes a file size value in bytes and converts it to a human-readable
 
 Example
 ```php
-$size = $rv->realSize(1024 * 1024);
+$size = ReadableValue::realSize(1024 * 1024);
 echo $size; // Output: 1 MB
 
-$size = $rv->realSize(1024 * 1024, false);
+$size = ReadableValue::realSize(1024 * 1024, false);
 echo $size; // Output: 1.05 Mb
 ```
 
@@ -32,7 +31,7 @@ This method takes a duration value in seconds and converts it to a human-readabl
 
 Example
 ```php
-$duration = $rv->duration(7200);
+$duration = ReadableValue::duration(7200);
 echo $duration; // Output: 2 hours
 ```
 
@@ -44,7 +43,7 @@ This method takes a decimal value and returns it as a percentage with the specif
 
 Example
 ```php
-$percentage = $rv->toPercentage(75, 100);
+$percentage = ReadableValue::toPercentage(75, 100);
 echo $percentage; // Output: 75.00%
 ```
 
@@ -56,6 +55,6 @@ This method adds an ordinal suffix to a number (e.g. 1st, 2nd, 3rd, 4th, etc.).
 
 Example
 ```php
-$ordinal = $rv->ordinalSuffix(21);
+$ordinal = ReadableValue::ordinalSuffix(21);
 echo $ordinal; // Output: 21st
 ```

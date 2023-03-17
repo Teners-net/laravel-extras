@@ -16,7 +16,7 @@ class ReadableValue
         $base = $useByte ? 1024 : 1000;
         $units = $useByte ? ['B', 'KB', 'MB', 'GB', 'TB', 'PB'] : ['b', 'Kb', 'Mb', 'Gb', 'Tb', 'Pb'];
 
-        for ($i = 0; $value > $base; $i++) {
+        for ($i = 0; $value >= $base; $i++) {
             $value /= $base;
         }
 

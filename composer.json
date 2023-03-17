@@ -29,12 +29,20 @@
       "Platinum\\LaravelExtras\\": "src/"
     }
   },
-  "require": {},
   "extra": {
     "laravel": {
       "providers": [
         "Platinum\\LaravelExtras\\LaravelExtrasServiceProvider"
       ]
+    }
+  },
+  "require-dev": {
+    "pestphp/pest": "^1.22",
+    "pestphp/pest-plugin-laravel": "^1.4"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
     }
   }
 }
