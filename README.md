@@ -92,6 +92,9 @@ Contributions are **welcome** via Pull Requests on [Github](https://github.com/T
   - make:repository
   - contruct:with-values\
     Add and set public values in the contruct of files generated with other artisan commands, e.g: make:event, make:mail, make:notification
+  - cast to slug\
+    Extend Cast to provide 'slug' cast
+  - MakeArrayTrait
 
 <br>
 

@@ -1,28 +1,40 @@
 {
-    "name": "platinum/laravel-extras",
-    "description": "Extend laravel applications with more artisan commands, traits and useful helper classes",
-    "type": "library",
-    "license": "MIT",
-    "homepage": "https://github.com/ThePlatinum/laravel-extras#readme",
-    "autoload": {
-        "psr-4": {
-            "Platinum\\LaravelExtras\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Platinum",
-            "email": "platinumemirate@gmail.com",
-            "homepage": "https://emmannueldesina.vercel.app/",
-            "role": "Developer"
-        }
-    ],
-    "require": {},
-    "extra": {
-      "laravel": {
-          "providers": [
-              "Platinum\\LaravelExtras\\LaravelExtrasServiceProvider"
-          ]
-      }
+  "name": "platinum/laravel-extras",
+  "description": "Extend laravel applications with more artisan commands, traits and useful helper classes",
+  "type": "library",
+  "license": "MIT",
+  "homepage": "https://github.com/ThePlatinum/laravel-extras#readme",
+  "readme": "README.md",
+  "keywords": [
+    "Laravel",
+    "laravel-extras",
+    "make:blade",
+    "make:trait",
+    "trait",
+    "sluggable",
+    "file",
+    "upload",
+    "readable"
+  ],
+  "authors": [
+    {
+      "name": "Platinum",
+      "email": "platinumemirate@gmail.com",
+      "homepage": "https://emmannueldesina.vercel.app/",
+      "role": "Developer"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Platinum\\LaravelExtras\\": "src/"
+    }
+  },
+  "require": {},
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Platinum\\LaravelExtras\\LaravelExtrasServiceProvider"
+      ]
+    }
+  }
 }
