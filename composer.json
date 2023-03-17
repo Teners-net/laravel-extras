@@ -8,8 +8,8 @@
   "keywords": [
     "Laravel",
     "laravel-extras",
-    "make:blade",
-    "make:trait",
+    "make-blade",
+    "make-trait",
     "trait",
     "sluggable",
     "file",
