@@ -9,8 +9,10 @@ trait Sluggable
 
   /**
    * Get default source column
+   * 
+   * @return string
    */
-  protected function defaultSourceColumn(): string 
+  protected function defaultSourceColumn() 
   {
     return config('laravel-extras.source-column', '');
   }
@@ -33,18 +35,24 @@ trait Sluggable
 
   /**
    * Get the slug source column
+   * 
+   * @return string
    */
-  protected function getSourceColumn(): string
+  protected function getSourceColumn()
   {
     return $this->slugSourceColumn ?? $this->defaultSourceColumn();
   }
 
   /**
-   * Generate a unique slug for the model.
+   * Generate a unique slug for the
+   * 
+   * @return string model.
    */
-  protected function generateSlug(): string
+  protected function generateSlug()
   {
-    $slug = Str::slug($this->getSourceColumn());
+    $sourceColumn = $this->getSourceColumn();
+
+    $slug = Str::slug($this->$sourceColumn);
 
     $count = 0;
     $originalSlug = $slug;
@@ -62,8 +70,10 @@ trait Sluggable
    *
    * @param string $slug
    * @param int $id
+   * 
+   * @return bool
    */
-  protected function slugExists(string $slug, int $id = 0): bool
+  protected function slugExists(string $slug, $id = 0)
   {
     return static::whereSlug($slug)
       ->where('id', '<>', $id)
@@ -72,8 +82,10 @@ trait Sluggable
 
   /**
    * Get the route key for the model.
+   * 
+   * @return string
    */
-  public function getRouteKeyName(): string
+  public function getRouteKeyName()
   {
     return 'slug';
   }

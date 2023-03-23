@@ -10,16 +10,27 @@ use Platinum\LaravelExtras\Models\File;
 
 trait FileUploadTrait
 {
+
+  /**
+   * Get default file system disk
+   */
+  protected function defaultDisk(): string 
+  {
+    return config('filesystems.default', '');
+  }
+  
   /**
    * Validate a file based on the specified rules.
    *
    * @param UploadedFile $file
-   * @param array $rules
+   * 
    * @return array
    */
-  public function validateFile(UploadedFile $file, array $rules): array
+  public function validateFile(UploadedFile $file): array
   {
-    $validator = Validator::make(['file' => $file], $rules);
+    $validator = Validator::make(['file' => $file], [
+      'file' => 'required|file'
+    ]);
 
     if ($validator->fails()) {
       return [
@@ -27,7 +38,7 @@ trait FileUploadTrait
         'error' => $validator->errors()->first(),
       ];
     }
-    
+
     return [
       'success' => true,
     ];
@@ -40,7 +51,7 @@ trait FileUploadTrait
    */
   public function generateUniqueFileName(UploadedFile $file): string
   {
-    return uniqid('',true) . '_' . time() . '.' . $file->getClientOriginalExtension();
+    return uniqid('', true) . '_' . time() . '.' . $file->getClientOriginalExtension();
   }
 
   /**
@@ -50,23 +61,24 @@ trait FileUploadTrait
    * @param string $file_name
    * @param string $path
    * @param string $disk
+   * 
+   * @return array
    */
   public function storeFile(
-    UploadedFile $file, 
-    string $file_name, 
+    UploadedFile $file,
+    string $file_name,
     $path = 'uploads',
-    $disk = 'public'): array
-  {
+    $disk = 'public'
+  ) {
     try {
-        $file->storeAs($path, $file_name, $disk);
+      $file->storeAs($path, $file_name, $disk);
+    } catch (Exception $e) {
+      return [
+        'success' => false,
+        'error' => $e->getMessage(),
+      ];
     }
-    catch (Exception $e) {
-        return [
-          'success' => false,
-          'error' => $e->getMessage(),
-        ];
-    }
-    
+
     return [
       'success' => true,
     ];
@@ -74,15 +86,22 @@ trait FileUploadTrait
 
   /**
    * Store a file in the database.
+   * 
+   * @param string $file_path
+   * @param string $file_name
+   * @param float $file_size
+   * @param string $disk
+   * @param mixed $fileModel
+   * 
+   * @return File
    */
-  private function storeFileInDatabase(
-    string $file_path, 
-    string $file_name, 
+  protected function storeFileInDatabase(
+    string $file_path,
+    string $file_name,
     float $file_size,
     $disk,
     $fileModel
-    ): File
-  {
+  ) {
     $file_model = $fileModel->create([
       'path' => $file_path,
       'name' => $file_name,
@@ -97,41 +116,56 @@ trait FileUploadTrait
   /**
    * Upload, validate and store a file.
    *
-   * @param UploadedFile $file
-   * @param array $rules
-   * @param string $path
-   * @param string $disk
+   * @param UploadedFile $file The file to store
+   * @param string $filename The name of the file
+   * @param string $path The storage path
+   * @param string $disk What storage disk to use
+   * @param bool $storeInDb Should the file be stored in the DB?
+   * 
+   * @return object
    */
   public function uploadFile(
     UploadedFile $file,
-    bool $storeInDb = false,
-    array $rules = [],
+    string $file_name = null,
     string $path = 'uploads',
-    string $disk = 'public',
+    string $disk = null,
+    bool $storeInDb = false,
     Model $model_instance = new File
-    ): array
-  {
-    
-    $validation_result = $this->validateFile($file, $rules);
+  ) {
+
+    $validation_result = $this->validateFile($file);
     if (!$validation_result['success']) {
       return $validation_result;
     }
 
-    $file_name = $this->generateUniqueFileName($file);
-    
-    $store_result = $this->storeFile($file, $file_name, $path, $disk);
+    if (!$file_name) $file_name = $this->generateUniqueFileName($file);
+
+    $store_result = $this->storeFile($file, $file_name, $path, $disk ?? $this->defaultDisk());
     if (!$store_result['success']) {
       return $store_result;
     }
 
-    $file_model = null;
-    
-    if ($storeInDb) {
-      $file_path = "$path/$file_name";
-      $file_model = $this->storeFileInDatabase($file_path, $file_name, $file->getSize(), $disk, $model_instance);
+    $file_path = "$path/$file_name";
+
+    if ($storeInDb)
+      $file_model = $this->storeFileInDatabase(
+        $file_path,
+        $file_name,
+        $file->getSize(),
+        $disk,
+        $model_instance
+      );
+
+    else {
+      $file_model = (object) [
+        'path' => $file_path,
+        'name' => $file_name,
+        'size' => $file->getSize(),
+        'disk' => $disk
+      ];
     }
 
-    return [
+    return (object) [
       'success' => true,
       'file' => $file_model,
     ];

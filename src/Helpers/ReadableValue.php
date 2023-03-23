@@ -14,7 +14,7 @@ class ReadableValue
     public static function realSize(float $value, bool $useByte = true, int $precision = 2): string
     {
         $base = $useByte ? 1024 : 1000;
-        $units = $useByte ? ['B', 'KB', 'MB', 'GB', 'TB', 'PB'] : ['b', 'Kb', 'Mb', 'Gb', 'Tb', 'Pb'];
+        $units = $useByte ? ['B', 'KB', 'MB', 'GB', 'TB', 'PB'] : ['B', 'Kb', 'Mb', 'Gb', 'Tb', 'Pb'];
 
         for ($i = 0; $value >= $base; $i++) {
             $value /= $base;
@@ -25,8 +25,12 @@ class ReadableValue
 
     /**
      * Get duration in human readable format
+     * 
+     * @param int $seconds
+     * 
+     * @return string
      */
-    public static function duration(int $seconds): string
+    public static function duration(int $seconds)
     {
         $hours = floor($seconds / 3600);
         $minutes = floor(($seconds % 3600) / 60);
@@ -49,20 +53,30 @@ class ReadableValue
 
     /**
      * Format a decimal value as a percentage with the specified precision.
+     * 
+     * @param float $value
+     * @param float $total
+     * @param int $precision
+     * 
+     * @return string
      */
-    public static function toPercentage(float $value, float $total = 100, int $precision = 2): string
+    public static function toPercentage(float $value, float $total = 100, int $precision = 2)
     {
         if ($total == 0) {
-            return '0%';
+            return '0';
         }
 
-        return number_format($value / $total * 100, $precision) . '%';
+        return number_format($value / $total * 100, $precision);
     }
 
     /**
      * Add an ordinal suffix to a number.
+     * 
+     * @param int $number
+     * 
+     * @return string
      */
-    public static function ordinalSuffix(int $number): string
+    public static function ordinalSuffix(int $number)
     {
         if (!in_array(($number % 100), [11, 12, 13])) {
             switch ($number % 10) {
