@@ -31,7 +31,7 @@ Artisan Commands:
 
 Extra Traits:
 - [Sluggable](docs/traits/sluggable.md)
-- [FileUploadTrait](docs/traits/sluggable.md)
+- [FileUploadTrait](docs/traits/file-upload-trait.md)
 
 Extra Helpers:
 - [FileGenerator](docs/helpers/file-generator.md)

@@ -39,12 +39,12 @@ echo $duration; // Output: 2 hours
 ```php 
 toPercentage(float $value, float $total = 100, int $precision = 2): string
 ```
-This method takes a decimal value and returns it as a percentage with the specified precision. The second parameter $total is optional and is used to specify the maximum value of the percentage. If $total is set to 0, the method will return '0%'.
+This method takes a decimal value and returns it as a percentage with the specified precision. The second parameter $total is optional and is used to specify the maximum value of the percentage. If $total is set to 0, the method will return '0'.
 
 Example
 ```php
 $percentage = ReadableValue::toPercentage(75, 100);
-echo $percentage; // Output: 75.00%
+echo $percentage; // Output: 75.00
 ```
 
 ### 4. ordinalSuffix()

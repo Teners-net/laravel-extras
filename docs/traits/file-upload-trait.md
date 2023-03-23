@@ -1,6 +1,6 @@
 # FileUploadTrait
 
-This trait provides a set of methods that can be used to handle file uploading, validation, and storage. It can be added to any Laravel model that needs to handle file uploads.
+This trait provides a set of methods that can be used to handle file uploading, and storage. It can be added to any Laravel model that needs to handle file uploads.
 
 ## Methods
 
@@ -8,15 +8,18 @@ This trait provides a set of methods that can be used to handle file uploading, 
 ```php
 uploadFile(
   UploadedFile $file,
-  bool $storeInDb = false, 
-  array $rules = [],
+  string $file_name = null,
   string $path = 'uploads',
-  string $disk = 'public',
+  string $disk,
+  bool $storeInDb = false,
   Model $model_instance = new File
-): array
+)
 ```
 
-Uploads, validates and stores a file. Returns an array with a success key that indicates if the upload succeeded or failed, and a file key with the File model instance if the file was stored in the database. If storeInDb is set to false, the file key will be null.
+Uploads, validates and stores a file. Returns an object with a `success` that indicates if the upload succeeded or failed, and a `file` with the File model instance if the file was stored in the database or file details object if not stored in database.
+
+> If `$storeInDb` is set to false, the file key will be an array of the file details.
+> If the `$file_name` is not set, a unique name is generated for the file
 
 ## Usage
 Add the FileUploadTrait and call the uploadFile() method from your controller to handle the file upload:
@@ -29,23 +32,15 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        // Optional if you want to add more validation for the file
-        $validation_rules = [
-            'file' => 'max:1024',
-        ];
-
         $upload_result = $this->uploadFile(
-            $request->file('file'),
-            false,
-            $validation_rules,  // validation 'required|file' will also be applied
+            $request->file('file')
         );
 
-        if ($upload_result['success']) {
+        if ($upload_result->success) {
             // File uploaded and stored in database
-            $file_model = $upload_result['file'];
+            $file_model = $upload_result->file;
         } else {
             // Handle upload error
-            $error_message = $upload_result['error'];
         }
     }
 }
@@ -66,9 +61,14 @@ and run `php artisan migrate`.
   ...
   $upload_result = $this->uploadFile(
       $request->file('file'),
+      ...
       true, // saves to database
-      [], // validation 'required|file' will still apply
       $custum_model_instance // Your custom File model instance
   );
   ...
 ```
+
+
+You can override the 
+- __storeFileInDatabase()__
+- __storeFileInDatabase()__
