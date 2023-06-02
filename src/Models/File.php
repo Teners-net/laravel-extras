@@ -24,6 +24,8 @@ class File extends Model
     if ($this->path) {
       return ReadableValue::realSize($this->size);
     }
+        
+    return '';
   }
 
   /**
@@ -34,6 +36,8 @@ class File extends Model
     if ($this->path) {
       return Storage::url($this->path);
     }
+    
+    return '';
   }
 
   /**
