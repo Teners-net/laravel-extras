@@ -39,7 +39,7 @@ class File extends Model
   /**
    * Accessors to append to the model instance
    */
-  public $append = [
+  public $appends = [
     'real_size', 'url'
   ];
 }
