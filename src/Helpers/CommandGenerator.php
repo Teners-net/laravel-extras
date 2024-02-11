@@ -36,9 +36,7 @@ abstract class CommandGenerator extends Command
         $extra = str_replace(array($this->getClass(), '/'), array('', '\\'), $this->argument($this->argumentName));
 
         $namespace = $this->getDefaultNamespace();
-
         $namespace .= '\\' . $extra;
-
         $namespace = str_replace('/', '\\', $namespace);
 
         return trim($namespace, '\\');
@@ -46,10 +44,11 @@ abstract class CommandGenerator extends Command
 
     /**
      * Check for overide --force option
+     *
+     * @return bool
      */
     public function useOveride(): bool
     {
-      return $this->option('force');
+        return $this->option('force');
     }
-
 }

@@ -2,22 +2,21 @@
 
 namespace Teners\LaravelExtras\Tests\Feature\Helpers;
 
+use Illuminate\Filesystem\Filesystem;
 use Teners\LaravelExtras\Helpers\GenerateFileContent;
 
 // Set up the test data
 $path = __DIR__ . '/../../test-stub/original.stub';
 $replaces = ['NAME' => 'Emmanuel', 'AGE' => 24];
-$outputPath = '/../test-output/output.txt';
+$outputPath = '/../../test-output/output.txt';
+$filesystem = new Filesystem;
 
-it('can generate content and save to a file', function () use ($path, $replaces, $outputPath) {
+it('can generate content and save to a file', function () use ($path, $replaces, $outputPath, $filesystem) {
 
     // Set the base path for output files
     GenerateFileContent::setBasePath(__DIR__);
-
-    // Create a new instance of the GenerateFileContent class
     $generator = new GenerateFileContent($path, $replaces);
 
-    // Generate the content and save to a file
     $result = $generator->generateContentWithPath($outputPath);
 
     // Assert that the file was created successfully
@@ -27,6 +26,8 @@ it('can generate content and save to a file', function () use ($path, $replaces,
     $generatedContent = file_get_contents(__DIR__ . $outputPath);
     expect($generatedContent)->toContain('My name is Emmanuel');
     expect($generatedContent)->toContain('I am 24 years old');
+
+    $filesystem->delete(__DIR__ . $outputPath);
 });
 
 it('can generate content without saving to a file', function () use ($path, $replaces) {
