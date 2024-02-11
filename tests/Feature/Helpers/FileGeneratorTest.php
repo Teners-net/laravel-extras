@@ -1,13 +1,15 @@
 <?php
 
-use Illuminate\Filesystem\Filesystem;
-use Platinum\LaravelExtras\Helpers\FileGenerator;
+namespace Teners\LaravelExtras\Tests\Feature\Helpers;
 
-$path = __DIR__.'/../test-output/generated.txt';
+use Illuminate\Filesystem\Filesystem;
+use Teners\LaravelExtras\Helpers\FileGenerator;
+
+$path = __DIR__.'/../../test-output/generated.txt';
 $content = "This file is generated";
 $filesystem = new Filesystem();
 
-it('can generate file with path and content only', 
+it('can generate file with path and content only',
   function () use ($path, $content)
   {
       $generator = new FileGenerator($path, $content);
@@ -25,7 +27,7 @@ it('can throw file exist error',
 );
 
 it('can generate file with custom filesystem and overwrite',
-  function () use ($path, $content, $filesystem) 
+  function () use ($path, $content, $filesystem)
   {
       $generator = new FileGenerator($path, $content, $filesystem);
 

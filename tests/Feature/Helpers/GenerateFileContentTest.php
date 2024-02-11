@@ -1,9 +1,11 @@
 <?php
 
-use Platinum\LaravelExtras\Helpers\GenerateFileContent;
+namespace Teners\LaravelExtras\Tests\Feature\Helpers;
+
+use Teners\LaravelExtras\Helpers\GenerateFileContent;
 
 // Set up the test data
-$path = __DIR__ . '/../test-stub/original.stub';
+$path = __DIR__ . '/../../test-stub/original.stub';
 $replaces = ['NAME' => 'Emmanuel', 'AGE' => 24];
 $outputPath = '/../test-output/output.txt';
 
@@ -29,13 +31,10 @@ it('can generate content and save to a file', function () use ($path, $replaces,
 
 it('can generate content without saving to a file', function () use ($path, $replaces) {
 
-    // Create a new instance of the GenerateFileContent class
     $generator = new GenerateFileContent($path, $replaces);
 
-    // Generate the content without saving to a file
     $result = $generator->generateContent();
 
-    // Assert that the generated content is correct
     expect($result)->toContain('My name is Emmanuel');
     expect($result)->toContain('I am 24 years old');
 });
