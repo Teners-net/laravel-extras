@@ -1,6 +1,6 @@
 <?php
 
-namespace Platinum\LaravelExtras\Helpers;
+namespace Teners\LaravelExtras\Helpers;
 
 use Illuminate\Console\Command;
 

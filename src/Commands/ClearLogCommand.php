@@ -1,6 +1,6 @@
 <?php
 
-namespace Platinum\LaravelExtras\Commands;
+namespace Teners\LaravelExtras\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -24,8 +24,7 @@ class ClearLogCommand extends Command
     {
         exec('rm -f ' . storage_path('logs/*.log'));
 
-        Log::info("Logs Cleared at ".date('l jS \of F Y h:i:s A'));
-
+        Log::info("Logs Cleared at " . date('l jS \of F Y h:i:s A'));
         $this->info("Logs cleared!");
 
         return $this::SUCCESS;

@@ -1,31 +1,31 @@
 <?php
 
-namespace Platinum\LaravelExtras\Commands;
+namespace Teners\LaravelExtras\Commands;
 
 use Illuminate\Support\Str;
-use Platinum\LaravelExtras\Helpers\CommandGenerator;
-use Platinum\LaravelExtras\Helpers\FileGenerator;
-use Platinum\LaravelExtras\Helpers\GenerateFileContent;
+use Teners\LaravelExtras\Helpers\CommandGenerator;
+use Teners\LaravelExtras\Helpers\FileGenerator;
+use Teners\LaravelExtras\Helpers\GenerateFileContent;
 
 class MakeBladeCommand extends CommandGenerator
 {
     public $argumentName = 'view';
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'make:blade 
+    protected $signature = 'make:blade
       {view : The name of the blade view}
       {--b|base : Use html5 template}
       {--force : Override the view even if it already exists}';
 
-    
+
     protected function stubPath(): string
     {
-      $stub = $this->option('base') ? 'blade-base.stub' : 'blade.stub';
-
-      return __DIR__ . '/../stubs/' . $stub;
+        $stub = $this->option('base') ? 'blade-base.stub' : 'blade.stub';
+        return __DIR__ . '/../stubs/' . $stub;
     }
 
     /**
@@ -48,7 +48,7 @@ class MakeBladeCommand extends CommandGenerator
      */
     protected function getDestinationFilePath(): string
     {
-        return base_path().'/resources/views/'. $this->getBladeViewName() . '.blade.php';
+        return base_path() . '/resources/views/' . $this->getBladeViewName() . '.blade.php';
     }
 
     /**
@@ -57,8 +57,7 @@ class MakeBladeCommand extends CommandGenerator
     protected function getTemplateContent(): string
     {
         return (
-            new GenerateFileContent
-            (
+            new GenerateFileContent(
                 $this->stubPath(),
             )
         )->generateContent();
@@ -71,8 +70,7 @@ class MakeBladeCommand extends CommandGenerator
     {
         $path = str_replace('\\', '/', $this->getDestinationFilePath());
 
-        if (!$this->laravel['files']->isDirectory($dir = dirname($path)))
-        {
+        if (!$this->laravel['files']->isDirectory($dir = dirname($path))) {
             $this->laravel['files']->makeDirectory($dir, 0777, true);
         }
 
@@ -80,7 +78,7 @@ class MakeBladeCommand extends CommandGenerator
 
         try {
             (new FileGenerator($path, $contents))->generateFile($this->useOveride());
-            
+
             $this->info("Created blade: {$path}");
         } catch (\Exception $e) {
 
@@ -91,5 +89,4 @@ class MakeBladeCommand extends CommandGenerator
 
         return $this::SUCCESS;
     }
-
 }

@@ -1,48 +1,57 @@
 {
-  "name": "platinum/laravel-extras",
-  "description": "Extend laravel applications with more artisan commands, traits and useful helper classes",
-  "type": "library",
-  "license": "MIT",
-  "homepage": "https://github.com/ThePlatinum/laravel-extras#readme",
-  "readme": "README.md",
-  "keywords": [
-    "Laravel",
-    "laravel-extras",
-    "make-blade",
-    "make-trait",
-    "trait",
-    "sluggable",
-    "file",
-    "upload",
-    "readable"
-  ],
-  "authors": [
-    {
-      "name": "Platinum",
-      "email": "platinumemirate@gmail.com",
-      "homepage": "https://emmannueldesina.vercel.app/",
-      "role": "Developer"
+    "name": "teners/laravel-extras",
+    "description": "Extend laravel applications with more artisan commands, traits and useful helper classes",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/Teners-net/laravel-extras#readme",
+    "readme": "README.md",
+    "keywords": [
+        "teners",
+        "laravel",
+        "laravel-extras",
+        "make-blade",
+        "make-trait",
+        "trait",
+        "sluggable",
+        "file",
+        "upload",
+        "readable"
+    ],
+    "authors": [
+        {
+            "name": "Emmanuel Adesina",
+            "email": "emmanuel@teners.net",
+            "homepage": "https://teners.net",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Teners\\LaravelExtras\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Teners\\LaravelExtras\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Teners\\LaravelExtras\\LaravelExtrasServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.21",
+        "pestphp/pest": "^2.33"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "test": "./vendor/bin/pest"
     }
-  ],
-  "autoload": {
-    "psr-4": {
-      "Platinum\\LaravelExtras\\": "src/"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Platinum\\LaravelExtras\\LaravelExtrasServiceProvider"
-      ]
-    }
-  },
-  "require-dev": {
-    "pestphp/pest": "^1.22",
-    "pestphp/pest-plugin-laravel": "^1.4"
-  },
-  "config": {
-    "allow-plugins": {
-      "pestphp/pest-plugin": true
-    }
-  }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Platinum\LaravelExtras\Helpers;
+namespace Teners\LaravelExtras\Helpers;
 
 class ReadableValue
 {
     /**
      * Convert file size in byte/Byte to human readable format
-     * 
+     *
      * @param float $value
      * @param bool $useByte Use binary or SI Unit
      * @param int $precision The number of decimal place
@@ -25,9 +25,9 @@ class ReadableValue
 
     /**
      * Get duration in human readable format
-     * 
+     *
      * @param int $seconds
-     * 
+     *
      * @return string
      */
     public static function duration(int $seconds)
@@ -53,11 +53,11 @@ class ReadableValue
 
     /**
      * Format a decimal value as a percentage with the specified precision.
-     * 
+     *
      * @param float $value
      * @param float $total
      * @param int $precision
-     * 
+     *
      * @return string
      */
     public static function toPercentage(float $value, float $total = 100, int $precision = 2)
@@ -71,9 +71,9 @@ class ReadableValue
 
     /**
      * Add an ordinal suffix to a number.
-     * 
+     *
      * @param int $number
-     * 
+     *
      * @return string
      */
     public static function ordinalSuffix(int $number)

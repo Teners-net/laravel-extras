@@ -1,6 +1,6 @@
 <?php
 
-namespace Platinum\LaravelExtras\Helpers;
+namespace Teners\LaravelExtras\Helpers;
 
 use Illuminate\Filesystem\Filesystem;
 
@@ -9,6 +9,8 @@ class FileGenerator
     protected string $path;
     protected string $content;
     protected Filesystem $filesystem;
+
+    private $overwrite = true;
 
     /**
      * __construct

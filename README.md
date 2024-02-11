@@ -1,26 +1,22 @@
 # Laravel Extras
 Laravel Extras is a package that extend Laravel Application with more artisan commands and useful traits and helper classes.
 
-![issues](https://img.shields.io/github/issues/ThePlatinum/laravel-extras)
-![forks](https://img.shields.io/github/forks/ThePlatinum/laravel-extras)
-![stars](https://img.shields.io/github/stars/ThePlatinum/laravel-extras)
-[![GitHub license](https://img.shields.io/github/license/ThePlatinum/laravel-extras)](https://github.com/ThePlatinum/laravel-extras/blob/master/LICENSE)
-
-<br>
+![issues](https://img.shields.io/github/issues/Teners-net/laravel-extras)
+![forks](https://img.shields.io/github/forks/Teners-net/laravel-extras)
+![stars](https://img.shields.io/github/stars/Teners-net/laravel-extras)
+[![GitHub license](https://img.shields.io/github/license/Teners-net/laravel-extras)](https://github.com/Teners-net/laravel-extras/blob/master/LICENSE)
 
 ## Installation
 To install Laravel Extras, run the following command in your terminal:
 
 ```bash
-composer require platinum/laravel-extras
+composer require Teners/laravel-extras
 ```
 
 Publish the package configuration file
 ```bash
-php artisan vendor:publish --provider="Platinum\LaravelExtras\LaravelExtrasServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Teners\LaravelExtras\LaravelExtrasServiceProvider" --tag="config"
 ```
-
-<br>
 
 ## Available Extras
 
@@ -41,8 +37,6 @@ Extra Models:
 - [File](docs/models/file.md)
 
 
-<br>
-
 ### Make Blade
 Creates a **blade** file inside the **/resource/views/** directory.
 
@@ -56,8 +50,6 @@ php artisan make:blade user/index
 ```
 
 
-<br>
-
 ### Make Trait
 Creates a new Trait class in the **App/Traits** directory.
 
@@ -70,8 +62,6 @@ php artisan make:trait LocationTrait
 php artisan make:trait Security/LocationTrait
 ```
 
-<br>
-
 ### Log Clear
 
 Clears log data from **/storage/logs/** directory.
@@ -79,10 +69,8 @@ Clears log data from **/storage/logs/** directory.
 `php artisan log:clear`
 
 
-<br>
-
 ## Contributions
-Contributions are **welcome** via Pull Requests on [Github](https://github.com/ThePlatinum/laravel-extras).
+Contributions are **welcome** via Pull Requests on [Github](https://github.com/Teners-net/laravel-extras).
 - Please document any change you made as neccesary in the [README.md](README.md).
 - Pleas make only one pull request per feature/fix.
 - See below for some ideas on what you can help with.
@@ -96,17 +84,25 @@ Contributions are **welcome** via Pull Requests on [Github](https://github.com/T
     Extend Cast to provide 'slug' cast
   - MakeArrayTrait
 
-<br>
-
 ## Issues
-Please report any issue you encounter in using the package through the [Github Issues](https://github.com/ThePlatinum/laravel-extras/issues) tab.
+Please report any issue you encounter in using the package through the [Github Issues](https://github.com/Teners-net/laravel-extras/issues) tab.
 
-<br>
+## Testing
 
-## Contributors
+``` bash
+composer test
+```
 
-<br>
+## Credits
 
-## Credits and License
-Laravel Extras was created by [Emmanuel Adesina](https://emmannueldesina.vercel.app/) and is licensed under the [MIT license](LICENSE.md).
+- [Emmanuel Adesina](https://github.com/ThePlatinum)
+
+### Contributors
+
+Contributors list will be added here
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
 

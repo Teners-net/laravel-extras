@@ -24,7 +24,7 @@ Uploads, validates and stores a file. Returns an object with a `success` that in
 ## Usage
 Add the FileUploadTrait and call the uploadFile() method from your controller to handle the file upload:
 ```php
-use Platinum\LaravelExtras\Traits\FileUploadTrait;
+use Teners\LaravelExtras\Traits\FileUploadTrait;
 
 class PostController extends Controller
 {
@@ -46,12 +46,12 @@ class PostController extends Controller
 }
 ```
 
-If you would like to store the details of the file uploaded the `Platinum\LaravelExtras\Models\File` model is used by default, but you can specify your own model.
+If you would like to store the details of the file uploaded the `Teners\LaravelExtras\Models\File` model is used by default, but you can specify your own model.
 
 
 Publish the migration
 ```bash
-php artisan vendor:publish --provider="Platinum\LaravelExtras\LaravelExtrasServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="Teners\LaravelExtras\LaravelExtrasServiceProvider" --tag="migrations"
 ```
 and run `php artisan migrate`.
 

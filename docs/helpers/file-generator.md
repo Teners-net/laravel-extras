@@ -4,8 +4,9 @@ This helper class provides a convenient way to generate files with a given conte
 
 ## Usage
 To use the FileGenerator class, you need to instantiate it with the required parameters:
+
 ```php 
-use Platinum\LaravelExtras\Helpers\FileGenerator;
+use Teners\LaravelExtras\Helpers\FileGenerator;
 
 // Instantiate the class
 $fileGenerator = new FileGenerator(
@@ -22,7 +23,7 @@ $fileGenerator->generateFile(
 You can also use your own instance of Illuminate\Filesystem\Filesystem to generate the file:
 
 ```php
-use Platinum\LaravelExtras\Helpers\FileGenerator;
+use Teners\LaravelExtras\Helpers\FileGenerator;
 use Illuminate\Filesystem\Filesystem;
 
 $filesystem = new Filesystem();

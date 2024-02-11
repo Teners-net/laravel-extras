@@ -5,7 +5,7 @@ The File model is a simple model that represents a file in your Laravel applicat
 
 Publish the migration
 ```bash
-php artisan vendor:publish --provider="Platinum\LaravelExtras\LaravelExtrasServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="Teners\LaravelExtras\LaravelExtrasServiceProvider" --tag="migrations"
 ```
 and run `php artisan migrate`.
 

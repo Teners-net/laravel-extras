@@ -1,6 +1,6 @@
 <?php
 
-namespace Platinum\LaravelExtras\Helpers;
+namespace Teners\LaravelExtras\Helpers;
 
 class GenerateFileContent
 {
@@ -46,7 +46,7 @@ class GenerateFileContent
     public function generateContentWithPath(string $outputPath): bool
     {
         $contents = $this->generateContent();
-        
+
         return file_put_contents(static::$basePath . $outputPath, $contents) !== false;
     }
 

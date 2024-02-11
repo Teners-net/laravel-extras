@@ -3,7 +3,7 @@
 This class provides some helper methods to format values in a human-readable way.
 
 ```php
-use Platinum\LaravelExtras\Helpers\ReadableValue;
+use Teners\LaravelExtras\Helpers\ReadableValue;
 ```
 
 ## Methods

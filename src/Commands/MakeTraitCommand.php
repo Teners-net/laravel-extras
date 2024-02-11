@@ -1,23 +1,23 @@
 <?php
 
-namespace Platinum\LaravelExtras\Commands;
+namespace Teners\LaravelExtras\Commands;
 
 use Illuminate\Support\Str;
-use Platinum\LaravelExtras\Helpers\CommandGenerator;
-use Platinum\LaravelExtras\Helpers\FileGenerator;
-use Platinum\LaravelExtras\Helpers\GenerateFileContent;
+use Teners\LaravelExtras\Helpers\CommandGenerator;
+use Teners\LaravelExtras\Helpers\FileGenerator;
+use Teners\LaravelExtras\Helpers\GenerateFileContent;
 
 class MakeTraitCommand extends CommandGenerator
 {
     public $argumentName = 'name';
-    protected $stubPath = __DIR__.'/../stubs/trait.stub';
+    protected $stubPath = __DIR__ . '/../stubs/trait.stub';
 
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'make:trait 
+    protected $signature = 'make:trait
       {name : The name of the trait class}
       {--force : Create the class even if the model already exists}';
 
@@ -43,7 +43,7 @@ class MakeTraitCommand extends CommandGenerator
      */
     protected function getDestinationFilePath(): string
     {
-        return app_path().'/Traits/'. $this->getTraitName() . '.php';
+        return app_path() . '/Traits/' . $this->getTraitName() . '.php';
     }
 
     /**
@@ -61,7 +61,7 @@ class MakeTraitCommand extends CommandGenerator
      *
      * @return string
      */
-    public function getDefaultNamespace() : string
+    public function getDefaultNamespace(): string
     {
         return "App\\Traits";
     }
@@ -72,12 +72,11 @@ class MakeTraitCommand extends CommandGenerator
     protected function getTemplateContent(): string
     {
         return (
-            new GenerateFileContent
-            (
-                $this->stubPath, 
+            new GenerateFileContent(
+                $this->stubPath,
                 [
-                  'CLASS_NAMESPACE' => $this->getClassNamespace(),
-                  'CLASS_NAME'      => $this->getTraitNameWithoutNamespace()
+                    'CLASS_NAMESPACE' => $this->getClassNamespace(),
+                    'CLASS_NAME'      => $this->getTraitNameWithoutNamespace()
                 ]
             )
         )->generateContent();
@@ -90,8 +89,7 @@ class MakeTraitCommand extends CommandGenerator
     {
         $path = str_replace('\\', '/', $this->getDestinationFilePath());
 
-        if (!$this->laravel['files']->isDirectory($dir = dirname($path)))
-        {
+        if (!$this->laravel['files']->isDirectory($dir = dirname($path))) {
             $this->laravel['files']->makeDirectory($dir, 0777, true);
             $this->info("Created the 'Trait' folder");
         }
@@ -100,7 +98,7 @@ class MakeTraitCommand extends CommandGenerator
 
         try {
             (new FileGenerator($path, $contents))->generateFile($this->useOveride());
-            
+
             $this->info("Created trait: {$path}");
         } catch (\Exception $e) {
 
@@ -111,5 +109,4 @@ class MakeTraitCommand extends CommandGenerator
 
         return $this::SUCCESS;
     }
-
 }

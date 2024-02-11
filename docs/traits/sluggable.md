@@ -9,7 +9,7 @@ The Sluggable trait generates unique and SEO friendly slug for model instance wh
 To use the Sluggable trait, add it to your model:
 
 ```php
-use Platinum\LaravelExtras\Traits\Sluggable;
+use Teners\LaravelExtras\Traits\Sluggable;
 
 class Post extends Model
 {
