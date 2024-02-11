@@ -1,16 +1,17 @@
 # Laravel Extras
 Laravel Extras is a package that extend Laravel Application with more artisan commands and useful traits and helper classes.
 
-![issues](https://img.shields.io/github/issues/Teners-net/laravel-extras)
-![forks](https://img.shields.io/github/forks/Teners-net/laravel-extras)
-![stars](https://img.shields.io/github/stars/Teners-net/laravel-extras)
-[![GitHub license](https://img.shields.io/github/license/Teners-net/laravel-extras)](https://github.com/Teners-net/laravel-extras/blob/master/LICENSE)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/teners/laravel-extras.svg?style=flat-square)](https://packagist.org/packages/teners/laravel-extras)
+[![issues](https://img.shields.io/github/issues/Teners-net/laravel-extras?style=flat-square)](https://github.com/Teners-net/laravel-extras/issues)
+[![stars](https://img.shields.io/github/stars/Teners-net/laravel-extras?style=flat-square)](https://github.com/Teners-net/laravel-extras/issues)
+[![GitHub license](https://img.shields.io/github/license/Teners-net/laravel-extras?style=flat-square)](https://github.com/Teners-net/laravel-extras/blob/main/LICENSE.md)
+[![Total Downloads](https://img.shields.io/packagist/dt/teners/laravel-extras.svg?style=flat-square)](https://packagist.org/packages/teners/laravel-extras)
 
 ## Installation
 To install Laravel Extras, run the following command in your terminal:
 
 ```bash
-composer require Teners/laravel-extras
+composer require teners/laravel-extras
 ```
 
 Publish the package configuration file
@@ -40,7 +41,9 @@ Extra Models:
 ### Make Blade
 Creates a **blade** file inside the **/resource/views/** directory.
 
-`php artisan make:trait {name}`
+``` bash
+php artisan make:trait {name}
+```
 
 Example:
 ```bash
@@ -53,10 +56,12 @@ php artisan make:blade user/index
 ### Make Trait
 Creates a new Trait class in the **App/Traits** directory.
 
-`php artisan make:trait {name}`
+``` bash
+php artisan make:trait {name}
+```
 
 Example:
-```bash
+``` bash
 php artisan make:trait LocationTrait
 # or
 php artisan make:trait Security/LocationTrait
@@ -66,7 +71,9 @@ php artisan make:trait Security/LocationTrait
 
 Clears log data from **/storage/logs/** directory.
 
-`php artisan log:clear`
+``` bash
+php artisan log:clear
+```
 
 
 ## Contributions
