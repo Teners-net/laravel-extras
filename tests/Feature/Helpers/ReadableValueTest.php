@@ -2,7 +2,6 @@
 
 use Teners\LaravelExtras\Helpers\ReadableValue;
 
-/** @test */
 it('can convert file size to human readable format', function () {
     $value = 1024 * 1024;
     expect(ReadableValue::realSize($value))->toBe('1 MB');
