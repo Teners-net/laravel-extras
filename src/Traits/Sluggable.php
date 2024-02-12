@@ -6,6 +6,15 @@ use Illuminate\Support\Str;
 
 trait Sluggable
 {
+    /**
+     * Get default slug column
+     *
+     * @return string
+     */
+    protected function defaultSlugColumn()
+    {
+        return config('laravel-extras.slug_column', 'slug');
+    }
 
     /**
      * Get default source column
@@ -14,7 +23,7 @@ trait Sluggable
      */
     protected function defaultSourceColumn()
     {
-        return config('laravel-extras.source-column', '');
+        return config('laravel-extras.source_column');
     }
 
     /**
@@ -23,14 +32,24 @@ trait Sluggable
     public static function bootSluggable()
     {
         static::creating(function ($model) {
-            $model->slug = $model->generateSlug();
+            $model[$model->getSlugColumn()] = $model->generateSlug();
         });
 
         static::saving(function ($model) {
             if ($model->isDirty($model->getSourceColumn())) {
-                $model->slug = $model->generateSlug();
+                $model[$model->getSlugColumn()] = $model->generateSlug();
             }
         });
+    }
+
+    /**
+     * Get the slug source column
+     *
+     * @return string
+     */
+    protected function getSlugColumn()
+    {
+        return $this->slugColumn ?? $this->defaultSlugColumn();
     }
 
     /**
@@ -52,7 +71,7 @@ trait Sluggable
     {
         $sourceColumn = $this->getSourceColumn();
 
-        $slug = Str::slug($this->$sourceColumn);
+        $slug = Str::slug($sourceColumn);
 
         $count = 0;
         $originalSlug = $slug;
@@ -75,7 +94,7 @@ trait Sluggable
      */
     protected function slugExists(string $slug, $id = 0)
     {
-        return static::whereSlug($slug)
+        return static::where($this->getSlugColumn(), $slug)
             ->where('id', '<>', $id)
             ->exists();
     }
@@ -87,6 +106,7 @@ trait Sluggable
      */
     public function getRouteKeyName()
     {
-        return 'slug';
+        $use_slug = $this->useSlugAsRouteKey ?? config('laravel-extras.slug_as_route', true);
+        return $use_slug ? $this->getSlugColumn() : 'id';
     }
 }
