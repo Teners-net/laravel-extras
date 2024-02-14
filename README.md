@@ -16,7 +16,11 @@ composer require teners/laravel-extras
 
 Publish the package configuration file
 ```bash
-php artisan vendor:publish --provider="Teners\LaravelExtras\LaravelExtrasServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Teners\LaravelExtras\LaravelExtrasServiceProvider" --tag="extras-config"
+```
+And the migrations file if you would be using the files model
+```bash
+php artisan vendor:publish --provider="Teners\LaravelExtras\LaravelExtrasServiceProvider" --tag="extras-migrations"
 ```
 
 ## Available Extras

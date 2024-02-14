@@ -71,7 +71,7 @@ trait Sluggable
     {
         $sourceColumn = $this->getSourceColumn();
 
-        $slug = Str::slug($sourceColumn);
+        $slug = Str::slug($this->$sourceColumn);
 
         $count = 0;
         $originalSlug = $slug;
