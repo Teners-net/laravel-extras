@@ -3,7 +3,6 @@
 namespace Teners\LaravelExtras\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class ClearLogCommand extends Command
 {
@@ -22,11 +21,21 @@ class ClearLogCommand extends Command
      */
     public function handle(): int
     {
-        exec('rm -f ' . storage_path('logs/*.log'));
+        $logFiles = glob(storage_path('logs/*.log'));
 
-        Log::info("Logs Cleared at " . date('l jS \of F Y h:i:s A'));
+        foreach ($logFiles as $file) {
+            $handle = fopen($file, 'w');
+
+            if ($handle) {
+                fwrite($handle, "Logs Cleared at " . date('l jS \of F Y h:i:s A'));
+                fclose($handle);
+            } else {
+                $this->error("Failed to open '$file' for writing.");
+            }
+        }
+
         $this->info("Logs cleared!");
 
-        return $this::SUCCESS;
+        return Command::SUCCESS;
     }
 }
