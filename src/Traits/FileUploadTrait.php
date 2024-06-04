@@ -96,22 +96,11 @@ trait FileUploadTrait
      * @return File
      */
     protected function storeFileInDatabase(
-        string $file_path,
-        string $file_name,
-        float $file_size,
-        $disk,
+        array $fileData,
         $fileModel
     ) {
-        $file_model = $fileModel->create([
-            'path' => $file_path,
-            'name' => $file_name,
-            'size' => $file_size,
-            'disk' => $disk,
-        ]);
-
-        return $file_model;
+        return $fileModel->create($fileData);
     }
-
 
     /**
      * Upload, validate and store a file.
@@ -130,9 +119,8 @@ trait FileUploadTrait
         string $path = 'uploads',
         string $disk = null,
         bool $storeInDb = false,
-        Model $model_instance = new File
+        Model $modelIstance = new File
     ) {
-
         $validation_result = $this->validateFile($file);
         if (!$validation_result['success']) {
             return $validation_result;
@@ -145,25 +133,17 @@ trait FileUploadTrait
             return $store_result;
         }
 
-        $file_path = "$path/$file_name";
+        $fileData = [
+            'path' => "$path/$file_name",
+            'name' => $file_name,
+            'size' => $file->getSize(),
+            'extension' => $file->extension(),
+            'disk' => $disk
+        ];
 
-        if ($storeInDb)
-            $file_model = $this->storeFileInDatabase(
-                $file_path,
-                $file_name,
-                $file->getSize(),
-                $disk,
-                $model_instance
-            );
-
-        else {
-            $file_model = (object) [
-                'path' => $file_path,
-                'name' => $file_name,
-                'size' => $file->getSize(),
-                'disk' => $disk
-            ];
-        }
+        $file_model = ($storeInDb) ?
+            $this->storeFileInDatabase($fileData, $modelIstance) :
+            (object) $fileData;
 
         return (object) [
             'success' => true,
