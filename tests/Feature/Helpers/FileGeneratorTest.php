@@ -13,7 +13,7 @@ it(
     'can generate file with path and content only',
     function () use ($path, $content) {
         $generator = new FileGenerator($path, $content);
-        $result = $generator->generateFile();
+        $result = $generator->generateFile(false);
 
         expect($result)->toBeTrue();
     }
@@ -23,7 +23,7 @@ it(
     'can throw file exist error',
     function () use ($path, $content, $filesystem) {
         $generator = new FileGenerator($path, $content, $filesystem);
-        expect(fn () => $generator->generateFile())->toThrow('File already exists!');
+        expect(fn () => $generator->generateFile(false))->toThrow('File already exists!');
 
         $filesystem->delete($path);
     }
@@ -34,7 +34,7 @@ it(
     function () use ($path, $content, $filesystem) {
         $generator = new FileGenerator($path, $content, $filesystem);
 
-        $result = $generator->generateFile(true);
+        $result = $generator->generateFile();
         expect($result)->toBeTrue();
 
         $filesystem->delete($path);

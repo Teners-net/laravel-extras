@@ -8,7 +8,7 @@ abstract class CommandGenerator extends Command
 {
     public const APP_PATH = 'App';
 
-    public $argumentName;
+    public string $argumentName = 'name';
 
     /**
      * Return the rendered File Content
@@ -33,22 +33,40 @@ abstract class CommandGenerator extends Command
      */
     public function getClassNamespace(): string
     {
-        $extra = str_replace(array($this->getClass(), '/'), array('', '\\'), $this->argument($this->argumentName));
+        if (method_exists($this, 'getNamespace')) {
+            return $this->getNamespace();
+        }
 
-        $namespace = $this->getDefaultNamespace();
-        $namespace .= '\\' . $extra;
-        $namespace = str_replace('/', '\\', $namespace);
+        if (method_exists($this, 'getDefaultNamespace')) {
+            return '';
+        }
 
-        return trim($namespace, '\\');
+        $extra = str_replace(
+            [$this->getClass(), '/'],
+            ['', '\\'],
+            $this->argument($this->argumentName)
+        );
+
+        $namespace = trim($this->getDefaultNamespace() . '\\' . $extra, '\\');
+
+        return str_replace('/', '\\', $namespace);
     }
 
     /**
-     * Check for overide --force option
+     * Check for override --force option
      *
      * @return bool
      */
-    public function useOveride(): bool
+    protected function useOverride(): bool
     {
-        return $this->option('force');
+        return $this->option('force') ?? false;
+    }
+
+    protected function ensureDirectoryExists(string $path): void
+    {
+        $directory = dirname($path);
+        if (!$this->laravel['files']->isDirectory($directory)) {
+            $this->laravel['files']->makeDirectory($directory, 0755, true);
+        }
     }
 }

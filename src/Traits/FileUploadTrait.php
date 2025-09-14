@@ -6,10 +6,20 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rule;
 use Teners\LaravelExtras\Models\File;
 
 trait FileUploadTrait
 {
+    protected array $allowedMimeTypes = [
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/webp',
+        'application/pdf',
+        'text/plain',
+        'application/msword'
+    ];
 
     /**
      * Get default file system disk
@@ -29,7 +39,11 @@ trait FileUploadTrait
     public function validateFile(UploadedFile $file): array
     {
         $validator = Validator::make(['file' => $file], [
-            'file' => 'required|file'
+            'file' => [
+                'required',
+                'file',
+                Rule::in($this->allowedMimeTypes),
+            ]
         ]);
 
         if ($validator->fails()) {
@@ -39,9 +53,7 @@ trait FileUploadTrait
             ];
         }
 
-        return [
-            'success' => true,
-        ];
+        return ['success' => true];
     }
 
     /**
@@ -51,7 +63,12 @@ trait FileUploadTrait
      */
     public function generateUniqueFileName(UploadedFile $file): string
     {
-        return uniqid('', true) . '_' . time() . '.' . $file->getClientOriginalExtension();
+        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $extension = $file->getClientOriginalExtension();
+
+        $safeName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $originalName);
+
+        return $safeName . '_' . uniqid() . '_' . time() . '.' . $extension;
     }
 
     /**
@@ -105,19 +122,22 @@ trait FileUploadTrait
     /**
      * Upload, validate and store a file.
      *
-     * @param UploadedFile $file The file to store
-     * @param string $filename The name of the file
-     * @param string $path The storage path
-     * @param string $disk What storage disk to use
-     * @param bool $storeInDb Should the file be stored in the DB?
+     * @param UploadedFile $file The file to upload
+     * @param string|null $fileName Custom filename (optional)
+     * @param string $path Storage path relative to disk root
+     * @param string|null $disk Storage disk name
+     * @param bool $storeInDb Whether to save file info to database
+     * @param Model $modelInstance Model instance for database storage
      *
-     * @return object
+     * @return object Result object with success status and file info
+     * @throws Exception When file upload fails
+     * @throws ValidationException When file validation fails
      */
     public function uploadFile(
         UploadedFile $file,
-        string $file_name = null,
+        ?string $file_name = null,
         string $path = 'uploads',
-        string $disk = null,
+        ?string $disk = null,
         bool $storeInDb = false,
         Model $modelIstance = new File
     ) {

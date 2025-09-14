@@ -10,19 +10,10 @@ class FileGenerator
     protected string $content;
     protected Filesystem $filesystem;
 
-    private $overwrite = true;
-
-    /**
-     * __construct
-     *
-     * @param string $path
-     * @param mixed $content
-     * @param Filesystem $filesystem
-     */
     public function __construct(
         string $path,
         mixed $content,
-        Filesystem $filesystem = null
+        ?Filesystem $filesystem = null
     ) {
         $this->path = $path;
         $this->content = $content;
@@ -32,25 +23,19 @@ class FileGenerator
     /**
      * Generate the file
      *
-     * @param bool $overwrite
+     * @param bool $overwrite Whether to overwrite if file exists
      * @throws \Exception
      */
-    public function generateFile(bool $overwrite = false): mixed
+    public function generateFile(bool $overwrite = true): mixed
     {
-        $path = $this->path;
-
-        if (!$this->filesystem->exists($path)) {
-            $this->filesystem->put($path, $this->content);
-            return true;
+        if (!$overwrite && $this->filesystem->exists($this->path)) {
+            throw new \Exception('File already exists!');
         }
 
-        $shouldOverwrite = $overwrite ?? $this->overwrite;
+        $this->filesystem->ensureDirectoryExists(dirname($this->path));
 
-        if ($shouldOverwrite) {
-            $this->filesystem->put($path, $this->content);
-            return true;
-        }
+        $this->filesystem->put($this->path, $this->content);
 
-        throw new \Exception('File already exists!');
+        return true;
     }
 }
