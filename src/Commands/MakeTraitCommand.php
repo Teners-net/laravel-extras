@@ -9,7 +9,7 @@ use Teners\LaravelExtras\Helpers\GenerateFileContent;
 
 class MakeTraitCommand extends CommandGenerator
 {
-    public $argumentName = 'name';
+    public string $argumentName = 'name';
     protected $stubPath = __DIR__ . '/../stubs/trait.stub';
 
     /**

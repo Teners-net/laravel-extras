@@ -9,7 +9,7 @@ use Teners\LaravelExtras\Helpers\GenerateFileContent;
 
 class MakeBladeCommand extends CommandGenerator
 {
-    public $argumentName = 'view';
+    public string $argumentName = 'view';
 
     /**
      * The name and signature of the console command.
