@@ -3,6 +3,7 @@
 namespace Teners\LaravelExtras\Traits;
 
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 
 trait Sluggable
 {
@@ -32,12 +33,14 @@ trait Sluggable
     public static function bootSluggable()
     {
         static::creating(function ($model) {
-            $model[$model->getSlugColumn()] = $model->generateSlug();
+            if (empty($model->{$model->getSlugColumn()})) {
+                $model->{$model->getSlugColumn()} = $model->generateSlug();
+            }
         });
 
-        static::saving(function ($model) {
+        static::updating(function ($model) {
             if ($model->isDirty($model->getSourceColumn())) {
-                $model[$model->getSlugColumn()] = $model->generateSlug();
+                $model->{$model->getSlugColumn()} = $model->generateSlug();
             }
         });
     }
@@ -69,34 +72,19 @@ trait Sluggable
      */
     protected function generateSlug()
     {
-        $sourceColumn = $this->getSourceColumn();
+        $sourceValue = $this->{$this->getSourceColumn()};
 
-        $slug = Str::slug($this->$sourceColumn);
-
-        $count = 0;
-        $originalSlug = $slug;
-
-        while ($this->slugExists($slug, $this->id)) {
-            $count++;
-            $slug = $originalSlug . '-' . $count;
+        if (empty($sourceValue)) {
+            throw new InvalidArgumentException('Slug source column value cannot be empty');
         }
 
-        return $slug;
-    }
+        $baseSlug = Str::slug($sourceValue);
 
-    /**
-     * Determine if the given slug already exists.
-     *
-     * @param string $slug
-     * @param int $id
-     *
-     * @return bool
-     */
-    protected function slugExists(string $slug, $id = 0)
-    {
-        return static::where($this->getSlugColumn(), $slug)
-            ->where('id', '<>', $id)
-            ->exists();
+        $existingCount = static::where($this->getSlugColumn(), 'LIKE', $baseSlug . '%')
+            ->where('id', '!=', $this->id ?? 0)
+            ->count();
+
+        return $existingCount > 0 ? $baseSlug . '-' . ($existingCount + 1) : $baseSlug;
     }
 
     /**
