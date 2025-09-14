@@ -11,7 +11,11 @@ class LaravelExtrasServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->publishResources();
+        if ($this->app->runningInConsole()) {
+            $this->publishResources();
+        }
+
+        $this->mergeConfigFrom(__DIR__ . '/../config/laravel-extras.php', 'extras-config');
     }
 
     public function register()
